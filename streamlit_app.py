@@ -18,11 +18,11 @@ if st.button("Generate Images"):
     z = torch.randn(5, 100)
     labels = torch.tensor([digit] * 5, dtype=torch.long)
     with torch.no_grad():
-        images = model(z, labels).squeeze(1)
-    grid = make_grid(images, nrow=5, normalize=True)
+        images = model(z, labels).squeeze(1)  # [5, 28, 28]
+    grid = make_grid(images.unsqueeze(1), nrow=5, normalize=True)  # [1, H, W]
 
     npimg = grid.numpy()
     fig, ax = plt.subplots(figsize=(10, 2))
-    ax.imshow(np.transpose(npimg, (1, 2, 0)))
+    ax.imshow(np.transpose(npimg, (1, 2, 0)).squeeze(), cmap="gray")  
     ax.axis('off')
     st.pyplot(fig)
