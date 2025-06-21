@@ -16,7 +16,7 @@ model.eval()
 
 if st.button("Generate Images"):
     z = torch.randn(5, 100)
-    labels = torch.tensor([digit] * 5)
+    labels = torch.tensor([digit] * 5, dtype=torch.long)
     with torch.no_grad():
         images = model(z, labels).squeeze(1)
     grid = make_grid(images, nrow=5, normalize=True)
